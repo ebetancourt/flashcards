@@ -26,7 +26,7 @@ def upgrade():
                     sa.Column('definition', mysql.TEXT(), nullable=True),
                     sa.Column('wrong_count', mysql.INTEGER(display_width=11),
                               autoincrement=False, nullable=True),
-                    sa.Column('available', mysql.DATETIME(), nullable=True),
+                    sa.Column('available', mysql.TIMESTAMP(), nullable=True),
                     sa.Column('bucket', mysql.INTEGER(display_width=11),
                               autoincrement=False, nullable=True),
                     sa.PrimaryKeyConstraint('id'),

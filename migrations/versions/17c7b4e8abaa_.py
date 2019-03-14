@@ -35,7 +35,7 @@ def upgrade():
                     sa.Column('email', mysql.VARCHAR(
                         length=255), nullable=True),
                     sa.Column('email_confirmed_at',
-                              mysql.DATETIME(), nullable=True),
+                              mysql.TIMESTAMP(), nullable=True),
                     sa.Column('username', mysql.VARCHAR(
                         length=200), nullable=True),
                     sa.Column('password', mysql.VARCHAR(
