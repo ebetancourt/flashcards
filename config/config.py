@@ -13,3 +13,11 @@ MAIL_SERVER = os.environ['MAIL_SERVER']
 MAIL_PORT = os.environ['MAIL_PORT']
 MAIL_USERNAME = os.environ['MAIL_USERNAME']
 MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
+
+# Flask-User settings
+# Shown in and email templates and page footers
+USER_APP_NAME = "Flask-User Basic App"
+USER_ENABLE_EMAIL = False        # Enable email authentication
+USER_ENABLE_USERNAME = True    # Disable username authentication
+USER_EMAIL_SENDER_NAME = USER_APP_NAME
+USER_EMAIL_SENDER_EMAIL = "noreply@example.com"

@@ -1,31 +1,39 @@
 import os
 from flask import Flask
+from flask_babelex import Babel
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_user import UserManager, current_user
+import sys
 
-from blueprints.userspace import userspace_blueprint
-from blueprints.admin import admin_blueprint
-from models.User import User, Role, UserRoles
+db = SQLAlchemy()
 
-app = Flask(__name__, instance_relative_config=True)
-app.config.from_object('config.config')
 
-app.secret_key = app.config.get('SECRET_KEY')
+def create_app():
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_object('config.config')
 
-try:
-    os.makedirs(app.instance_path)
-except OSError:
-    pass
+    app.secret_key = app.config.get('SECRET_KEY')
 
-db = SQLAlchemy(app)
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
 
-user_manager = UserManager(app, db, User)
+    with app.app_context():
+        from blueprints.userspace import userspace_blueprint
+        from blueprints.admin import admin_blueprint
+        from models.User import User, Role, UserRoles
 
-migrate = Migrate(app, db)
+        babel = Babel(app)
+        db.init_app(app)
+        db.create_all()
 
-app.register_blueprint(userspace_blueprint)
-app.register_blueprint(admin_blueprint, url_prefix='/admin')
+        user_manager = UserManager(app, db, User)
 
-if __name__ == '__main__':
-    app.run()
+        migrate = Migrate(app, db)
+
+        app.register_blueprint(userspace_blueprint)
+        app.register_blueprint(admin_blueprint, url_prefix='/admin')
+
+        return app

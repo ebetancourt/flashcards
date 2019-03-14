@@ -3,14 +3,16 @@ from sqlalchemy.orm import relationship
 from flask_user import UserMixin
 
 from models.Base import Base
+from app import db
 
 
-class User(Base, UserMixin):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     active = Column('is_active', Boolean(),
                     nullable=False, server_default='1')
-
+    username = Column(String(255, collation='NOCASE'),
+                   nullable=False, unique=True)
     # User authentication information. The collation='NOCASE' is required
     # to search case insensitively when USER_IFIND_MODE is 'nocase_collation'.
     email = Column(String(255, collation='NOCASE'),
@@ -25,7 +27,7 @@ class User(Base, UserMixin):
                        nullable=False, server_default='')
 
     # Define the relationship to Role via UserRoles
-    roles = relationship('Role', secondary='user_roles')
+    # roles = relationship('Role', secondary='user_roles')
 
 
 class Role(Base):
