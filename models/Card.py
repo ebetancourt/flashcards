@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, String, DateTime, Text
-from Base import Base
+from sqlalchemy.orm import relationship
+
+from models.Base import Base
 
 
-class Cards(Base):
+class Card(Base):
     __tablename__ = 'cards'
 
     id = Column(Integer, primary_key=True)
