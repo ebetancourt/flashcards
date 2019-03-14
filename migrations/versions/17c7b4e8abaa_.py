@@ -30,8 +30,8 @@ def upgrade():
     op.create_table('users',
                     sa.Column('id', mysql.INTEGER(display_width=11),
                               autoincrement=True, nullable=False),
-                    sa.Column('is_active', mysql.BOOLEAN(
-                        display_width=1), autoincrement=False, nullable=True),
+                    sa.Column('is_active', mysql.BOOLEAN(),
+                              autoincrement=False, nullable=True),
                     sa.Column('email', mysql.VARCHAR(
                         length=255), nullable=True),
                     sa.Column('email_confirmed_at',
