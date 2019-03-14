@@ -1,5 +1,7 @@
 import os
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from blueprints.userspace import userspace_blueprint
 from blueprints.admin import admin_blueprint
@@ -13,6 +15,9 @@ try:
     os.makedirs(app.instance_path)
 except OSError:
     pass
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 app.register_blueprint(userspace_blueprint)
 app.register_blueprint(admin_blueprint, url_prefix='/admin')
