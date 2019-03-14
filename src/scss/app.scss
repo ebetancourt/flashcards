@@ -1,0 +1,14 @@
+// test simple project
+
+@import "../../node_modules/bootswatch/dist/pulse/_variables";
+@import "../../node_modules/bootswatch/dist/pulse/bootstrap";
+@import "../../node_modules/bootswatch/dist/pulse/bootswatch";
+
+
+body {
+  padding-top: 5rem;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
