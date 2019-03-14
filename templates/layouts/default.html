@@ -11,6 +11,7 @@
   <title>Starter Template for Bootstrap</title>
 
   <link href="/static/css/app.css" rel="stylesheet">
+  {% block css %}{% endblock %}
 </head>
 
 <body>
@@ -39,9 +40,15 @@
   </nav>
 
   <div class="container">
-    <div id="main"></div>
+    <div id="main">
+      {% for message in get_flashed_messages() %}
+      <div class=flash>{{ message }}</div>
+      {% endfor %}
+      {% block body %}{% endblock %}
+    </div>
   </div><!-- /.container -->
   <script src="/static/js/index.js"></script>
+  {% block scripts %}{% endblock %}
 </body>
 
 </html>
