@@ -11,19 +11,19 @@ class User(db.Model, UserMixin):
     id = Column(Integer, primary_key=True)
     active = Column('is_active', Boolean(),
                     nullable=False, server_default='1')
-    username = Column(String(255, collation='NOCASE'),
-                   nullable=False, unique=True)
+    username = Column(String(255),
+                      nullable=False, unique=True)
     # User authentication information. The collation='NOCASE' is required
     # to search case insensitively when USER_IFIND_MODE is 'nocase_collation'.
-    email = Column(String(255, collation='NOCASE'),
+    email = Column(String(255),
                    nullable=False, unique=True)
     email_confirmed_at = Column(DateTime())
     password = Column(String(255), nullable=False, server_default='')
 
     # User information
-    first_name = Column(String(100, collation='NOCASE'),
+    first_name = Column(String(100),
                         nullable=False, server_default='')
-    last_name = Column(String(100, collation='NOCASE'),
+    last_name = Column(String(100),
                        nullable=False, server_default='')
 
     # Define the relationship to Role via UserRoles
