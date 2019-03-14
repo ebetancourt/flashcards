@@ -16,7 +16,7 @@ MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
 
 # Flask-User settings
 # Shown in and email templates and page footers
-USER_APP_NAME = "Flask-User Basic App"
+USER_APP_NAME = "Flash Cards"
 USER_ENABLE_EMAIL = False        # Enable email authentication
 USER_ENABLE_USERNAME = True    # Disable username authentication
 USER_EMAIL_SENDER_NAME = USER_APP_NAME
