@@ -13,19 +13,7 @@ class User(db.Model, UserMixin):
                     nullable=False, server_default='1')
     username = Column(String(255),
                       nullable=False, unique=True)
-    # User authentication information. The collation='NOCASE' is required
-    # to search case insensitively when USER_IFIND_MODE is 'nocase_collation'.
-    email = Column(String(255),
-                   nullable=False, unique=True)
-    email_confirmed_at = Column(DateTime())
     password = Column(String(255), nullable=False, server_default='')
-
-    # User information
-    first_name = Column(String(100),
-                        nullable=False, server_default='')
-    last_name = Column(String(100),
-                       nullable=False, server_default='')
-
     # Define the relationship to Role via UserRoles
     # roles = relationship('Role', secondary='user_roles')
 
