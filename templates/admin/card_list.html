@@ -1,0 +1,32 @@
+{% extends "layouts/default.html" %}
+
+{% block body %}
+<div class="container">
+    <h1>
+        Your Cards
+    </h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Word</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in cards %}
+            <tr>
+                <td scope="row">{{ card.id }}</td>
+                <td>{{ card.word }}</td>
+                <td><a href="{{ url_for('admin_blueprint.card_form', card_id=card.id) }}">Edit</a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><a href="{{ url_for('admin_blueprint.card_form') }}">New</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

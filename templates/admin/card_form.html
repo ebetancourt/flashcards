@@ -2,7 +2,13 @@
 
 {% block body %}
 <div class="container">
-    <h1>Creating a New Card</h1>
+    <h1>
+        {% if card.id %}
+        Editing Card for "{{ card.word }}"
+        {% else %}
+        Creating a New Card
+        {% endif %}
+    </h1>
     <form method="POST" action="{{ url_for('admin_blueprint.save_card') }}">
         {% if card.id %}
         <input type="hidden" name="id" value="{{ card.id }}">
@@ -17,7 +23,13 @@
             <textarea class="form-control" id="definition" name="definition"
                 placeholder="Put your definition here">{{ card.definition or '' }}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary float-right">Create</button>
+        <button type="submit" class="btn btn-primary float-right">
+            {% if card.id %}
+            Save
+            {% else %}
+            Create
+            {% endif %}
+        </button>
     </form>
 </div>
 {% endblock %}

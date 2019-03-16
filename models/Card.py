@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime, timedelta
 
 from models.Base import Base
+from app import db
 
 
 class Card(Base):
@@ -53,3 +54,16 @@ class Card(Base):
 
     def set_next_available(self):
         self.available = datetime.now() + self.BUCKET_INTERVALS[self.bucket]
+
+    def save(self):
+        if self.id is None:
+            db.session.add(self)
+        return db.session.commit()
+
+    @staticmethod
+    def find_by_id(id):
+        return db.session.query(Card).get(id)
+
+    @staticmethod
+    def all_for_current_user():
+        return db.session.query(Card).all()

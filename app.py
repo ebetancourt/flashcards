@@ -27,7 +27,6 @@ def create_app():
 
         babel = Babel(app)
         db.init_app(app)
-        # db.create_all()
 
         user_manager = UserManager(app, db, User)
 
