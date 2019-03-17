@@ -12,3 +12,31 @@ body {
   padding: 3rem 1.5rem;
   text-align: center;
 }
+
+.card {
+  &.quizzing {
+    .card-footer {
+      .btn {
+        visibility: hidden;
+      }
+    }
+    .card-body {
+      .definition{
+        visibility: hidden;
+      }
+      .click-to-reveal {
+        display: block;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%)
+      }
+    }
+  }
+  .click-to-reveal {
+    display: none;
+  }
+  .definition-wrapper{
+    position: relative;
+  }
+}

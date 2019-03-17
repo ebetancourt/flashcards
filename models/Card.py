@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text
+from sqlalchemy import Column, Integer, String, DateTime, Text, or_
 from sqlalchemy.orm import relationship
 from datetime import datetime, timedelta
 
@@ -11,9 +11,9 @@ class Card(Base):
 
     id = Column(Integer, primary_key=True)
     word = Column(String(120))
-    bucket = Column(Integer)
-    wrong_count = Column(Integer)
-    available = Column(DateTime)
+    bucket = Column(Integer, default=0)
+    wrong_count = Column(Integer, default=0)
+    available = Column(DateTime, default=datetime.now())
     definition = Column(Text)
 
     BUCKET_INTERVALS = [
@@ -55,10 +55,26 @@ class Card(Base):
     def set_next_available(self):
         self.available = datetime.now() + self.BUCKET_INTERVALS[self.bucket]
 
+    def time_til_available(self):
+        if self.available is None:
+            return 'Now'
+        delta = self.available - datetime.now()
+        if delta.total_seconds() < 0:
+            return 'Now'
+
+        return delta
+
     def save(self):
         if self.id is None:
             db.session.add(self)
         return db.session.commit()
+
+    @staticmethod
+    def get_next():
+        return db.session.query(Card) \
+                 .filter(or_(Card.available < datetime.now(), Card.bucket == 0)) \
+                 .order_by((Card.bucket != 0), Card.available) \
+                 .limit(1).first()
 
     @staticmethod
     def find_by_id(id):
