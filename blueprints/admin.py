@@ -10,7 +10,7 @@ admin_blueprint = flask.Blueprint('admin_blueprint', __name__)
 @admin_blueprint.route('/test')
 @login_required
 def index():
-    user_cards = Card.all_for_current_user()
+    user_cards = Card.all_for_current_user(current_user.id)
     return flask.render_template('admin/card_list.html', cards=user_cards)
 
 
@@ -33,6 +33,7 @@ def save_card():
             card = Card.find_by_id(request.form['id'])
         else:
             card = Card()
+            card.user = current_user.id
 
         card.word = request.form['word']
         card.definition = request.form['definition']

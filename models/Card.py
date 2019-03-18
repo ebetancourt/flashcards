@@ -15,6 +15,7 @@ class Card(Base):
     wrong_count = Column(Integer, default=0)
     available = Column(DateTime, default=datetime.now())
     definition = Column(Text)
+    user = Column(Integer, default=0)
 
     BUCKET_INTERVALS = [
         0,  # Bucket 0
@@ -62,7 +63,17 @@ class Card(Base):
         if delta.total_seconds() < 0:
             return 'Now'
 
-        return delta
+        if self.bucket == 11 or self.wrong_count >= 10:
+            return 'Never'
+        if delta.total_seconds() > (3600 * 24):
+            return '{:d} days'.format(round(delta.total_seconds() / (3600 * 24)))
+        if delta.total_seconds() > 3600:
+            return '{:d} hours'.format(round(delta.total_seconds() / 3600))
+        if delta.total_seconds() > 600:
+            return '{:d} minutes'.format(round(delta.total_seconds() / 60))
+        if delta.total_seconds() > 60:
+            return '{:.1f} minutes'.format(delta.total_seconds() / 60)
+        return '{:d} seconds'.format(round(delta.seconds))
 
     def save(self):
         if self.id is None:
@@ -70,16 +81,20 @@ class Card(Base):
         return db.session.commit()
 
     @staticmethod
-    def get_next():
+    def get_next(user_id):
         return db.session.query(Card) \
-                 .filter(or_(Card.available < datetime.now(), Card.bucket == 0)) \
-                 .order_by((Card.bucket != 0), Card.available) \
-                 .limit(1).first()
+            .filter(or_(Card.available < datetime.now(), Card.bucket == 0)) \
+            .filter(Card.bucket < 11) \
+            .filter(Card.user == user_id) \
+            .order_by((Card.bucket != 0), Card.available) \
+            .limit(1).first() \
 
     @staticmethod
     def find_by_id(id):
         return db.session.query(Card).get(id)
 
     @staticmethod
-    def all_for_current_user():
-        return db.session.query(Card).all()
+    def all_for_current_user(user_id):
+        return db.session.query(Card) \
+            .filter(Card.user == user_id) \
+            .all()

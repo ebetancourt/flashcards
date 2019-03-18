@@ -3,7 +3,8 @@
 {% if session.logged_in %}
 <div>User logged in</div>
 {% endif %}
-<div class="card quizzing" id="quiz-card" style="width:350px;margin: 50px auto;">
+<div class="card {% if card %}quizzing{% endif %}" id="quiz-card" style="width:350px;margin: 50px auto;">
+    {% if card %}
     <div class="card-body">
         <h1 class="card-title">{{ card.word }}</h1>
         <div class="definition-wrapper">
@@ -14,9 +15,21 @@
         </div>
     </div>
     <div class="card-footer">
-        <a href="#" class="btn btn-danger">Mark Wrong</a>
-        <a href="#" class="btn btn-success float-right">Mark Right</a>
+        <a href="{{ url_for('userspace_blueprint.mark_wrong', card_id=card.id) }}" class="btn btn-danger">Mark Wrong</a>
+        <a href="{{ url_for('userspace_blueprint.mark_right', card_id=card.id) }}"
+            class="btn btn-success float-right">Mark
+            Right</a>
     </div>
+    {% else %}
+    <div class="card-body">
+        <div class="definition-wrapper">
+            <p class="card-text definition">
+                You are temporarily done; please come back later to review more words or
+                <a href="{{ url_for('admin_blueprint.card_form') }}">add new words</a> in the admin area.
+            </p>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
 

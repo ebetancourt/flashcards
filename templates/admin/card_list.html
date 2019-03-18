@@ -21,7 +21,7 @@
             <tr>
                 <td scope="row">{{ card.id }}</td>
                 <td>{{ card.word }}</td>
-                <td>{{ card.bin }}</td>
+                <td>{{ card.bucket }}</td>
                 <td>{{ card.wrong_count }}</td>
                 <td>{{ card.time_til_available() }}</td>
                 <td><a href="{{ url_for('admin_blueprint.card_form', card_id=card.id) }}">Edit</a></td>
