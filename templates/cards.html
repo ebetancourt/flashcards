@@ -15,10 +15,10 @@
         </div>
     </div>
     <div class="card-footer">
-        <a href="{{ url_for('userspace_blueprint.mark_wrong', card_id=card.id) }}" class="btn btn-danger">Mark Wrong</a>
-        <a href="{{ url_for('userspace_blueprint.mark_right', card_id=card.id) }}"
-            class="btn btn-success float-right">Mark
-            Right</a>
+        <a href="{{ url_for('userspace_blueprint.mark_wrong', card_id=card.id) }}" class="btn btn-danger">I did not get
+            it</a>
+        <a href="{{ url_for('userspace_blueprint.mark_right', card_id=card.id) }}" class="btn btn-success float-right">I
+            got it</a>
     </div>
     {% else %}
     <div class="card-body">
